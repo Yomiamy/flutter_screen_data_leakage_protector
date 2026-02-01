@@ -1,15 +1,59 @@
-# flutter_screen_data_leakage_protector
+# Flutter Screen Data Leakage Protector
 
-A new Flutter plugin project.
+A Flutter plugin designed to prevent sensitive data leakage by obscuring the screen when the application is in the background or the App Switcher. 
 
-## Getting Started
+This plugin provides a robust security layer by automatically covering your application's UI with a black overlay during transition states, protecting user privacy and corporate data from being visible in system-level previews.
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/to/develop-plugins),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+## Features
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Automatic Protection**: Seamlessly detects when the app is moving to the background or the app switcher.
+- **Security Overlay**: Displays a solid black overlay to hide sensitive information.
+- **Auto-Recovery**: Automatically removes the overlay when the user returns to the app.
+- **Cross-Platform**: Fully supports both Android and iOS with native implementations.
+- **High Performance**: Uses native APIs for minimal overhead and immediate protection.
 
+## Platform Support
+
+| Android | iOS |
+| :---: | :---: |
+| ✅ | ✅ |
+
+## Installation
+
+Add this to your `pubspec.yaml`:
+
+```yaml
+dependencies:
+  flutter_screen_data_leakage_protector: ^1.0.0
+```
+
+## Usage
+
+Simply including the plugin in your project activates its default protection behavior on supported platforms. 
+
+You can also use the plugin instance to query the platform version (optional):
+
+```dart
+import 'package:flutter_screen_data_leakage_protector/flutter_screen_data_leakage_protector.dart';
+
+final _protectorPlugin = FlutterScreenDataLeakageProtector();
+
+// Get platform version
+String? version = await _protectorPlugin.getPlatformVersion();
+```
+
+### How it works
+
+- **iOS**: Uses `UIApplication.willResignActiveNotification` and `UIApplication.didBecomeActiveNotification` to toggle a `UIView` overlay on the key window.
+- **Android**: Utilizes `ActivityLifecycleCallbacks` and a `BroadcastReceiver` for `ACTION_CLOSE_SYSTEM_DIALOGS` to detect Home and Recent apps interactions, applying a black `View` overlay to the decor view.
+
+## Verification Steps
+
+1.  Run the application.
+2.  Minimize the app or open the App Switcher (Multi-tasking view).
+3.  Observe that the screen preview is obscured (blacked out).
+4.  Return to the app and confirm the UI is restored immediately.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
