@@ -1,4 +1,4 @@
-group = "com.example.flutter_screen_data_leakage_protector"
+group = "com.yianday.screen_leakage_protector"
 version = "1.0-SNAPSHOT"
 
 buildscript {
@@ -25,7 +25,7 @@ apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
 android {
-    namespace = "com.example.flutter_screen_data_leakage_protector"
+    namespace = "com.yianday.screen_leakage_protector"
 
     compileSdk = 36
 

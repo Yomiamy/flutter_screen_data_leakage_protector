@@ -35,7 +35,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.example.flutter_screen_data_leakage_protector
+        package: com.yianday.screen_leakage_protector
         pluginClass: FlutterScreenDataLeakageProtectorPlugin
       ios:
         pluginClass: FlutterScreenDataLeakageProtectorPlugin

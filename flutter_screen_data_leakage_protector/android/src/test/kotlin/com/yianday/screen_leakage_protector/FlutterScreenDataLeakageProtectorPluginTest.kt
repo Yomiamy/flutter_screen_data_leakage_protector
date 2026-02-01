@@ -1,9 +1,9 @@
-package com.example.flutter_screen_data_leakage_protector
+package com.yianday.screen_leakage_protector
 
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
-import org.mockito.Mockito
 import kotlin.test.Test
+import org.mockito.Mockito
 
 /*
  * This demonstrates a simple unit test of the Kotlin portion of this plugin's implementation.
