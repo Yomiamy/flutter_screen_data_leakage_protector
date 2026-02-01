@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screen_data_leakage_protector/flutter_screen_data_leakage_protector.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,24 +31,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final _protectorPlugin = FlutterScreenDataLeakageProtector();
-  String _platformVersion = 'Unknown';
-
   @override
   void initState() {
     super.initState();
-    _loadPlatformVersion();
-  }
-
-  Future<void> _loadPlatformVersion() async {
-    String version;
-    try {
-      version = await _protectorPlugin.getPlatformVersion() ?? 'Unknown';
-    } catch (_) {
-      version = 'Error';
-    }
-    if (!mounted) return;
-    setState(() => _platformVersion = version);
   }
 
   @override
@@ -57,20 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverAppBar.large(
-            title: const Text('Security Shield'),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 16.0),
-                child: Chip(
-                  label: Text(_platformVersion),
-                  backgroundColor: Theme.of(
-                    context,
-                  ).colorScheme.primaryContainer,
-                ),
-              ),
-            ],
-          ),
+          SliverAppBar.large(title: const Text('Security Shield')),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16.0),

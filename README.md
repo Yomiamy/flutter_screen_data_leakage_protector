@@ -29,17 +29,12 @@ dependencies:
 
 ## Usage
 
-Simply including the plugin in your project activates its default protection behavior on supported platforms. 
-
-You can also use the plugin instance to query the platform version (optional):
+Simply including the plugin in your project activates its default protection behavior on supported platforms. No additional code configuration is required for basic protection.
 
 ```dart
 import 'package:flutter_screen_data_leakage_protector/flutter_screen_data_leakage_protector.dart';
 
-final _protectorPlugin = FlutterScreenDataLeakageProtector();
-
-// Get platform version
-String? version = await _protectorPlugin.getPlatformVersion();
+// The plugin is active as soon as it's included in your project.
 ```
 
 ### How it works
