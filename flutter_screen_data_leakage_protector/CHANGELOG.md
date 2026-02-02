@@ -1,3 +1,7 @@
+## 1.1.0
+
+*   Add custom privacy overlay image for screen data leakage protector.
+
 ## 1.0.0
 
 *   Initial release.
