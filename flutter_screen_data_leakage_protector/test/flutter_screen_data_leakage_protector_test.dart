@@ -5,7 +5,11 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockFlutterScreenDataLeakageProtectorPlatform
     with MockPlatformInterfaceMixin
-    implements FlutterScreenDataLeakageProtectorPlatform {}
+    implements FlutterScreenDataLeakageProtectorPlatform {
+  @override
+  Future<void> applyDataLeakageWithConfig({String? overlayImage}) =>
+      Future.value();
+}
 
 void main() {
   final FlutterScreenDataLeakageProtectorPlatform initialPlatform =

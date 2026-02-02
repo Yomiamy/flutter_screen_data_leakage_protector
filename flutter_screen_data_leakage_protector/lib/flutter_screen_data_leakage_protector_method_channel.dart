@@ -11,4 +11,11 @@ class MethodChannelFlutterScreenDataLeakageProtector
   final methodChannel = const MethodChannel(
     'flutter_screen_data_leakage_protector',
   );
+
+  @override
+  Future<void> applyDataLeakageWithConfig({String? overlayImage}) async {
+    await methodChannel.invokeMethod('applyDataLeakageWithConfig', {
+      'overlayImage': overlayImage,
+    });
+  }
 }

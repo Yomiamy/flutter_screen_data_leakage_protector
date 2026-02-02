@@ -38,6 +38,8 @@ class FlutterScreenDataLeakageProtectorPlugin :
     // Layer used to cover the screen with black when the application enters the background
     private var securityOverlay: View? = null
 
+    private var overlayImageName: String? = null
+
     // Whether the covered layer is currently visible.
     private var isOverlayVisible = false
 
@@ -45,7 +47,17 @@ class FlutterScreenDataLeakageProtectorPlugin :
             ViewTreeObserver.OnWindowFocusChangeListener { hasFocus -> if (hasFocus) hideOverlay() }
 
     override fun onMethodCall(call: MethodCall, result: Result) {
-        result.notImplemented()
+        if (call.method == "applyDataLeakageWithConfig") {
+            overlayImageName = call.argument<String>("overlayImage")
+            // Reset overlay to allow recreation with new config
+            securityOverlay?.let {
+                (it.parent as? ViewGroup)?.removeView(it)
+                securityOverlay = null
+            }
+            result.success(null)
+        } else {
+            result.notImplemented()
+        }
     }
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
@@ -118,18 +130,29 @@ class FlutterScreenDataLeakageProtectorPlugin :
     private fun showOverlay() {
         val currentActivity = activity ?: return
         if (securityOverlay == null) {
-            securityOverlay =
-                    View(currentActivity).apply {
-                        setBackgroundColor(Color.BLACK)
-                        layoutParams =
-                                ViewGroup.LayoutParams(
-                                        ViewGroup.LayoutParams.MATCH_PARENT,
-                                        ViewGroup.LayoutParams.MATCH_PARENT
-                                )
-                        isClickable = true
-                        isFocusable = true
-                        setOnClickListener { visibility = View.GONE }
+            val context: Context = currentActivity
+            securityOverlay = if (overlayImageName != null) {
+                val resId = context.resources.getIdentifier(overlayImageName, "drawable", context.packageName)
+                if (resId != 0) {
+                    android.widget.ImageView(context).apply {
+                        setImageResource(resId)
+                        scaleType = android.widget.ImageView.ScaleType.CENTER_CROP
                     }
+                } else {
+                    View(context).apply { setBackgroundColor(Color.BLACK) }
+                }
+            } else {
+                View(context).apply { setBackgroundColor(Color.BLACK) }
+            }.apply {
+                layoutParams =
+                        ViewGroup.LayoutParams(
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.MATCH_PARENT
+                        )
+                isClickable = true
+                isFocusable = true
+                setOnClickListener { visibility = View.GONE }
+            }
             (currentActivity.window.decorView as ViewGroup).addView(securityOverlay)
         }
         securityOverlay?.visibility = View.VISIBLE
