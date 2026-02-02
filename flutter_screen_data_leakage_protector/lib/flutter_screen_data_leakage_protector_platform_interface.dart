@@ -24,4 +24,12 @@ abstract class FlutterScreenDataLeakageProtectorPlatform
     PlatformInterface.verifyToken(instance, _token);
     _instance = instance;
   }
+
+  /// Sets the configuration for data leakage protection.
+  /// [overlayImage] is the name of the image asset to be used as an overlay.
+  Future<void> applyDataLeakageWithConfig({String? overlayImage}) {
+    throw UnimplementedError(
+      'applyDataLeakageWithConfig() has not been implemented.',
+    );
+  }
 }

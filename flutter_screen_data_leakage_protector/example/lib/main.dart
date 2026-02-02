@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screen_data_leakage_protector/flutter_screen_data_leakage_protector.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,6 +35,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    // Initialize the protector with a custom image overlay
+    FlutterScreenDataLeakageProtector.applyDataLeakageWithConfig(
+      overlayImage: 'privacy_overlay',
+    );
   }
 
   @override
@@ -107,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
             _buildStep(
               context,
               '2',
-              'Check if the screen preview is obscured (Black/Hidden).',
+              'Check if the screen preview is obscured by the custom Privacy Shield image.',
             ),
             _buildStep(
               context,

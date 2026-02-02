@@ -3,6 +3,7 @@ import UIKit
 
 public class FlutterScreenDataLeakageProtectorPlugin: NSObject, FlutterPlugin {
     private static let securityOverlayTag = 999_999
+    private var overlayImageName: String?
 
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "flutter_screen_data_leakage_protector", binaryMessenger: registrar.messenger())
@@ -25,7 +26,14 @@ public class FlutterScreenDataLeakageProtectorPlugin: NSObject, FlutterPlugin {
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        result(FlutterMethodNotImplemented)
+        if call.method == "applyDataLeakageWithConfig" {
+            if let args = call.arguments as? [String: Any] {
+                self.overlayImageName = args["overlayImage"] as? String
+            }
+            result(nil)
+        } else {
+            result(FlutterMethodNotImplemented)
+        }
     }
 
     @objc private func applicationWillResignActive() {
@@ -44,9 +52,17 @@ public class FlutterScreenDataLeakageProtectorPlugin: NSObject, FlutterPlugin {
             overlay.isHidden = false
             window.bringSubviewToFront(overlay)
         } else {
-            let overlay = UIView(frame: window.bounds)
+            let overlay: UIView
+            if let imageName = overlayImageName, let image = UIImage(named: imageName) {
+                let imageView = UIImageView(frame: window.bounds)
+                imageView.image = image
+                imageView.contentMode = .scaleAspectFill
+                overlay = imageView
+            } else {
+                overlay = UIView(frame: window.bounds)
+                overlay.backgroundColor = .black
+            }
             overlay.tag = tag
-            overlay.backgroundColor = .black
             overlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             window.addSubview(overlay)
             overlay.isHidden = false
