@@ -172,8 +172,7 @@ class FlutterScreenDataLeakageProtectorPlugin :
                             override fun onSystemDialogEvent(reason: SystemDialogReasonEnum) {
                                 when (reason) {
                                     SystemDialogReasonEnum.HOME -> showOverlay()
-                                    SystemDialogReasonEnum.RECENT ->
-                                            if (isOverlayVisible) hideOverlay() else showOverlay()
+                                    SystemDialogReasonEnum.RECENT -> showOverlay()
                                     SystemDialogReasonEnum.UNKNOWN -> Unit
                                 }
                             }
