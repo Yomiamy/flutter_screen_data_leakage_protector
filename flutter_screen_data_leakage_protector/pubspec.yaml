@@ -1,6 +1,6 @@
 name: flutter_screen_data_leakage_protector
 description: "A Flutter plugin to prevent sensitive data leakage by obscuring the screen (overlaying a black screen) when the application is in the background or app switcher. Supports Android and iOS."
-version: 1.1.1
+version: 1.1.2
 homepage: https://github.com/Yomiamy/flutter_screen_data_leakage_protector
 repository: https://github.com/Yomiamy/flutter_screen_data_leakage_protector
 issue_tracker: https://github.com/Yomiamy/flutter_screen_data_leakage_protector/issues

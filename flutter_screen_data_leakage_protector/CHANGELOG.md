@@ -1,3 +1,9 @@
+## 1.1.2
+
+### Fixed
+
+*   Show the privacy overlay on iOS when entering the App Switcher. During `willResignActive` the scene is no longer `foregroundActive`, so the key window is now resolved across all window scenes, ensuring the overlay (custom image or black fallback) is applied on resign.
+
 ## 1.1.1
 
 ### Fixed
