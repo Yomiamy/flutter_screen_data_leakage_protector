@@ -1,3 +1,9 @@
+## 1.1.1
+
+### Fixed
+
+*   Fix the overlay detection flow when switching via the Recent apps key on Android, so the security overlay is always shown instead of being toggled off.
+
 ## 1.1.0
 
 *   Add custom privacy overlay image for screen data leakage protector.
