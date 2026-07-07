@@ -25,7 +25,7 @@ Add this to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  flutter_screen_data_leakage_protector: ^1.1.1
+  flutter_screen_data_leakage_protector: ^1.1.2
 ```
 
 ### Basic Usage
