@@ -75,11 +75,15 @@ public class FlutterScreenDataLeakageProtectorPlugin: NSObject, FlutterPlugin {
 
     private func getActiveWindow() -> UIWindow? {
         if #available(iOS 13.0, *) {
-            return UIApplication.shared.connectedScenes
-                .filter { $0.activationState == .foregroundActive }
-                .first(where: { $0 is UIWindowScene })
-                .flatMap { $0 as? UIWindowScene }?.windows
-                .first(where: { $0.isKeyWindow })
+            // ponytail: don't filter by activationState — during willResignActive the
+            // scene is no longer .foregroundActive, so that filter returns nil exactly
+            // when we need the window (App Switcher snapshot). Take the key window across
+            // all window scenes instead.
+            let windows = UIApplication.shared.connectedScenes
+                .compactMap { $0 as? UIWindowScene }
+                .flatMap { $0.windows }
+            return windows.first(where: { $0.isKeyWindow })
+                ?? windows.first
                 ?? UIApplication.shared.delegate?.window ?? nil
         } else {
             return UIApplication.shared.keyWindow ?? UIApplication.shared.delegate?.window ?? nil
